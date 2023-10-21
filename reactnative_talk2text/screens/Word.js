@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'; // เพิ่ม i
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import Voice from '@react-native-voice/voice';
 
-const words = ['sorry', 'lemon','apple','hello'];
+const words = ['sorry', 'lemon','apple','hello','network'];
 
 export const Word = (props) => {
     const navigation = props.nav
@@ -20,6 +20,7 @@ export const Word = (props) => {
     const randomWordRef = useRef(null);
 
     useEffect(() => {
+        stopRec()
         Voice.onSpeechStart = onSpeechStart;
         Voice.onSpeechEnd = onSpeechEnd;
         Voice.onSpeechResults = onSpeechResults;
@@ -87,6 +88,18 @@ export const Word = (props) => {
             setCorrectlySpoken(false); // ถ้า randomWord เป็น null หรือว่าง
         }
     };
+
+    const stopRec=async()=> {
+        try {
+          await Voice.stop();
+          await Voice.destroy()
+          setStarted('')
+          setEnded('')
+          setResults([])
+        } catch(err){
+          console.log('startRec',err)
+        }
+      }
     
 
     return (
