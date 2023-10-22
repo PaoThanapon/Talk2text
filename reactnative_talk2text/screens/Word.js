@@ -37,9 +37,11 @@ export const Word = (props) => {
 
         // อัพเดตค่า randomWord ผ่าน ref
         randomWordRef.current = newRandomWord;
-
+        console.log('randomWord:', newRandomWord);
         setIsModalVisible(true);
-        startRec(newRandomWord);
+        setTimeout(()=> {
+            startRec(newRandomWord);
+        },1000)
     };
 
     const closeModal = () => {
@@ -70,7 +72,7 @@ export const Word = (props) => {
         console.log('User Speak (raw):', e);
     
         const randomWord = randomWordRef.current;
-        console.log('randomWord:', randomWord);
+        // console.log('randomWord:', randomWord);
     
         if (randomWord) {
             const spokenWords = e.value.map(word => word.toLowerCase());
