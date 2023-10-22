@@ -95,8 +95,6 @@ export const Word = (props) => {
         try {
           await Voice.stop();
           await Voice.destroy()
-          setStarted('')
-          setEnded('')
           setResults([])
         } catch(err){
           console.log('startRec',err)
