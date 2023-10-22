@@ -25,7 +25,8 @@ export const StackNav = () => {
           { headerShown: false }
         }
       >
-        <Stack.Screen name="Home" component={WordScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Word" component={WordScreen} />
       </Stack.Navigator>
     )
 }

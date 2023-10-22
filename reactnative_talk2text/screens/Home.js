@@ -1,22 +1,30 @@
 import React , { useEffect , useState } from 'react';
-import { View, Text , TouchableOpacity , ScrollView } from 'react-native';
+import { View, Text , TouchableOpacity , ScrollView , Button } from 'react-native';
 import Voice from '@react-native-voice/voice'
 import { Image } from 'react-native';
 
 
-export const Home = () => {
-  const [started , setStarted] = useState('')
-  const [ended , setEnded] = useState('')
-  const [results , setResults] = useState([])
+export const Home = (props) => {
 
-  const [lightOn, setLightOn] = useState(false);
-  const [lightOff, setLightOff] = useState(false);
+    const navigation = props.nav
+    const route = props.route
+
+    const GotoWord = () => {
+        navigation.push('Word')
+    }
+
+    const [started , setStarted] = useState('')
+    const [ended , setEnded] = useState('')
+    const [results , setResults] = useState([])
+
+    const [lightOn, setLightOn] = useState(false);
+    const [lightOff, setLightOff] = useState(false);
 
   useEffect(()=> {
+    stopRec()
     Voice.onSpeechStart = onSpeechStart
     Voice.onSpeechEnd = onSpeechEnd
     Voice.onSpeechResults = onSpeechResults
-
 
     return ()=> {
       Voice.destroy().then(Voice.removeAllListeners)
@@ -94,19 +102,25 @@ export const Home = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <Button
+                onPress={GotoWord}
+                title="Go to Word"
+                color="black"
+                />
       <View style={{flexDirection:'row',marginTop:50,justifyContent:'space-evenly'}}>
         <Text>Started {started} </Text>
         <Text>Ended {ended} </Text>
       </View>
-      <ScrollView horizontal style={{alignSelf:'center',marginTop:50}}>
-        {
-          results.map(item=> {
-            return (
-              <Text style={{textAlign:'center'}}>{item}</Text>
-            )
-          })
-        }
-      </ScrollView>
+        <ScrollView horizontal style={{alignSelf:'center',marginTop:50}}>
+            
+            {
+            results.map(item=> {
+                return (
+                <Text style={{textAlign:'center'}}>{item}</Text>
+                )
+            })
+            }
+        </ScrollView>
       <View style={{width:'100%',height:'50%'}}>
         {lightOn && <Image style={{width:'100%',height:'100%'}} source={require('../picture/lighton.jpg')} />}
         {lightOff && <Image style={{width:'100%',height:'100%'}} source={require('../picture/lightoff.jpg')} />}
